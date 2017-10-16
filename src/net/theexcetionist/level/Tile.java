@@ -13,6 +13,7 @@ public class Tile {
 	public static Tile[] tiles = new Tile[100];
 	public static Tile grass = new GrassTile(0);
 	public static Tile tree = new TreeTile(1);
+	public static Tile path = new PathTile(2);
 	
 	protected int x, y;
 //	public static Tile rock = new RockTile(1);

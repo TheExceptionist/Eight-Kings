@@ -12,6 +12,10 @@ public class Player extends Entity{
 	public Player(String name, int ID, int x, int y, int w, int h, InputHandler input) {
 		super(name, ID, x, y, w, h);
 		this.input = input;
+		
+		team = 0;
+		
+		setStats(20, 0, 0, 0, 0);
 	}
 	
 	public void tick(GameMap map){
@@ -31,7 +35,18 @@ public class Player extends Entity{
 		super.render(g);
 		
 		g.drawImage(Assets.testObject, x, y, w, h, null);
+		
+		//System.out.println("Working");
 		//g.drawRect(getBounds().x, getBounds().y, w, h);
+	}
+
+	public void setPosition(int startX, int startY, GameMap map) {
+		this.x = startX;
+		this.y = startY;
+		
+		map.addObject(this);
+		
+		//System.out.println("Working"+x+" "+y);
 	}
 
 }

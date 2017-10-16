@@ -48,15 +48,21 @@ public class GameMain extends Canvas implements Runnable{
 		currentLevel = level;
 	}
 	
+	public GameLevel getCurrentLevel(){
+		return currentLevel;
+	}
+	
 	public void init(){
 		input = new InputHandler(this);
 		loader = new MapLoader();
-		hud = new HUD(guiX, guiY);
-		player = new Player("Player", 0, 0, 0, 32, 32, input);
+		hud = new HUD(guiX, guiY, this);
+		player = new Player("Player", 0,  4 * 32, 5 * 32, 32, 32, input);
 		
 		oreleon = new GameLevel("Oreleon", 0, 9, 12, loader);
 		
 		setCurrentLevel(oreleon);
+		
+		oreleon.setPlayer(player);
 		
 		customFont = new Font(null, Font.PLAIN, 30);
 		
@@ -75,6 +81,13 @@ public class GameMain extends Canvas implements Runnable{
 		
 		Assets.load();
 		Jukebox.init();
+		Jukebox.load("/Music/med_ava.wav", "forest_theme");
+		Jukebox.load("/Music/mad_magic.wav", "dungeon_theme");
+		//Jukebox.load("/Music/medi_start.wav", "main_theme");
+		
+
+		//Jukebox.loop("forest_theme");
+		//Jukebox.load("/Music/med_ava.wav", "theme");
 	}
 	
 	public synchronized void stop(){
@@ -190,6 +203,11 @@ public class GameMain extends Canvas implements Runnable{
 		window.setLocationRelativeTo(null);
 		
 		game.start();
+	}
+
+	public Player getPlayer() {
+		// TODO Auto-generated method stub
+		return player;
 	}
 
 }

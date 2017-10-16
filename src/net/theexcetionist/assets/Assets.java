@@ -11,17 +11,29 @@ public class Assets {
 //	public static BufferedImage logo, ink;
 	public static BufferedImage testTile;
 	public static BufferedImage testObject;
+	public static BufferedImage rat;
 	public static BufferedImage grassTile;
+	public static BufferedImage treeTile;
+	public static BufferedImage pathTile;
+	public static BufferedImage guiBack;
 	
 	public static void load(){
 		SpriteLoader load = new SpriteLoader();
 		
 		Sprite test1 = new Sprite(load.load("/Objects/Floor.png"));
 		Sprite test2 = new Sprite(load.load("/Characters/Player0.png"));
+		Sprite rodents = new Sprite(load.load("/Characters/Rodent0.png"));
+		Sprite tree = new Sprite(load.load("/Objects/Tree0.png"));
+		Sprite gui = new Sprite(load.load("/GUI/GUI1.png"));
 		
 		testTile = test1.crop(0, 1, 48, 112, 16, 16);
 		testObject = test2.crop(0, 0, 16, 16, 16, 16);
-		grassTile = test1.crop(1, 1, 48, 112, 16, 16);
+		grassTile = test1.crop(1, 1, 64, 128, 16, 16);
+		treeTile = tree.crop(1, 1, 48, 48, 16, 16);
+		pathTile = test1.crop(1, 1, 64, 240, 16, 16);
+		//grassTile = test1.crop(1, 1, 48, 112, 16, 16);
+		rat = rodents.crop(0, 1, 16, 16, 16, 16);
+		guiBack = gui.crop(0, 1, 112, 0, 16, 16);
 //		Sprite c1 = new Sprite(load.load("/Sprites/backgrounds/bg_blue.png"));
 //		Sprite c2 = new Sprite(load.load("/Sprites/backgrounds/bg_green.png"));
 //		Sprite c3 = new Sprite(load.load("/Sprites/backgrounds/bg_orange.png"));

@@ -34,10 +34,15 @@ public class MapLoader {
 				int green = (pixel >> 8) & 0xff;
 				int blue  = (pixel) & 0xff;
 				
-				if(red == 0 && green == 0 && blue == 0){
+				if(red == 0 && green == 255 && blue == 0){
+					map[xx + yy * w] = 0;
+				}
+				if(red == 0 && green == 255 && blue == 255){
 					map[xx + yy * w] = 1;
 				}
-				
+				if(red == 255 && green == 255 && blue == 255){
+					map[xx + yy * w] = 2;
+				}
 				/*if(red == 255 && green == 255 && blue == 255){
 					map[xx][yy] = 1;
 				}else if(red == 0 && green == 80 && blue == 255){

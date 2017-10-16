@@ -7,7 +7,7 @@ import net.theexcetionist.level.GameMap;
 
 public class GameObject {
 	protected int x, y, w, h;
-	protected int health;
+	protected int health, maxHealth, defense, magDefense, attack, magAttack;
 	protected int ID;
 	protected String name;
 	
@@ -26,8 +26,59 @@ public class GameObject {
 		alive = true;
 	}
 	
+	public void setStats(int health, int defense, int magDefense, int attack, int magAttack){
+		this.health = health;
+		this.maxHealth = health;
+		this.attack = attack;
+		this.defense = defense;
+		this.magAttack = magAttack;
+		this.magDefense = magDefense;
+	}
+	
+	public void addStats(int health, int defense, int magDefense, int attack, int magAttack){
+		this.health += health;
+		this.maxHealth = this.health;
+		this.attack += attack;
+		this.defense += defense;
+		this.magAttack += magAttack;
+		this.magDefense += magDefense;
+	}
+	
+	public int getDefense() {
+		return defense;
+	}
+
+	public void setDefense(int defense) {
+		this.defense = defense;
+	}
+
+	public int getMagDefense() {
+		return magDefense;
+	}
+
+	public void setMagDefense(int magDefense) {
+		this.magDefense = magDefense;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+
+	public int getMagAttack() {
+		return magAttack;
+	}
+
+	public void setMagAttack(int magAttack) {
+		this.magAttack = magAttack;
+	}
+
 	public void tick(GameMap map){
-		if(health < 0) die();
+		if(health <= 0) die();
+		if(health < 0) health = 0;
 	}
 	
 	public void render(Graphics g){
@@ -36,6 +87,7 @@ public class GameObject {
 	
 	public void die(){
 		if(alive) alive = !alive;
+		//health = 0;
 	}
 
 	public int getX() {
@@ -105,5 +157,12 @@ public class GameObject {
 	public Rectangle getBounds(){
 		return new Rectangle(x, y, w, h);
 	}
-	
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
 }
