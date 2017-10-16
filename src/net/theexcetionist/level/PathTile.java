@@ -8,7 +8,7 @@ public class PathTile extends Tile{
 
 	public PathTile(int id) {
 		super(id);
-		connectsToGrass = true;
+		connectsToGrass = false;
 	}
 	
 	public void render(GameMap map, Graphics g, int x, int y){

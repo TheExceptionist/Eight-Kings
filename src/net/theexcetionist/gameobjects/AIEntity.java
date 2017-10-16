@@ -3,18 +3,21 @@ package net.theexcetionist.gameobjects;
 import java.awt.Graphics;
 import java.util.Random;
 
+import net.theexcetionist.items.Item;
 import net.theexcetionist.level.GameMap;
 
 public class AIEntity extends Entity{
 	private int attackRange = 0;
 
-	private Random random;
+	protected Random random;
 	
 	protected int aiPackage;
 	protected int targetX = -1, targetY = -1;
 	protected int xa, ya, randomWalkTime;
 	protected int left = 0, right = 0, up = 0, down = 0;
 	protected Entity targetEntity;
+	
+	protected int level = 1;
 	
 	public AIEntity(String name, int ID, int x, int y, int w, int h) {
 		super(name, ID, x, y, w, h);
@@ -30,16 +33,45 @@ public class AIEntity extends Entity{
 		this.random = new Random();
 	}
 	
+	public AIEntity(String name, int ID, int x, int y, int w, int h, int aiPackage, int attackRange, int level) {
+		this(name, ID, x, y, w, h, aiPackage, attackRange);
+		
+		this.level = level;
+		this.random = new Random();
+	}
+	
+	public Item getRandomItem(int level){
+		Item item = null;
+		
+		for(int i = 0; i < 5; i++){
+			int max = (level + 1) * 2;
+			
+			if(max > Item.items.length) max = Item.items.length;
+			
+			Item item2 = Item.getItemFromRating(random.nextInt(max));
+			
+			if(item2 != null && random.nextInt(2) == 1) {
+				item = item2;
+				break;
+			}
+			//System.out.println(item);
+		}
+		
+		return item;
+	}
+	
 	public void tick(GameMap map){
 		super.tick(map);
 		
 		if(aiPackage == -1){
 			xa = 0;
 			ya = 0;
-			if(left == 1)xa = -1;
-			if(right == 1)xa = 1;
-			if(up == 1)ya = -1;
-			if(down == 1)ya = 1;
+			
+			if(left == 1) {xa = -1; walkDist++;}
+			if(right == 1){xa =  1; walkDist++;}
+			if(up == 1)   {ya = -1; walkDist++;}
+			if(down == 1) {ya =  1; walkDist++;}
+			
 			move(xa, ya, map);
 			randomMove(map);
 			
@@ -49,10 +81,12 @@ public class AIEntity extends Entity{
 		if(aiPackage == 0){
 			xa = 0;
 			ya = 0;
-			if(left == 1)xa = -1;
-			if(right == 1)xa = 1;
-			if(up == 1)ya = -1;
-			if(down == 1)ya = 1;
+			
+			if(left == 1) {xa = -1; walkDist++;}
+			if(right == 1){xa =  1; walkDist++;}
+			if(up == 1)   {ya = -1; walkDist++;}
+			if(down == 1) {ya =  1; walkDist++;}
+			
 			move(xa, ya, map);
 			randomMove(map);
 		}
@@ -62,17 +96,19 @@ public class AIEntity extends Entity{
 		if(aiPackage == 1 && targetX > -1 && targetY > -1){
 			
 			//if (level.player != null && randomWalkTime == 0) {
-				if(targetEntity != null && targetEntity.getBounds().intersects(getBounds())) targetEntity.doHurt(5, dir);
+				if(targetEntity != null && targetEntity.getBounds().intersects(getBounds())) targetEntity.doHurt(usedAttack, usedMagAttack, dir, magicAttack, this);
 			
 				int xd = targetX - x;
 				int yd = targetY - y;
 				if (xd * xd + yd * yd < 32 * attackRange * 32 * attackRange) {
 					xa = 0;
 					ya = 0;
-					if (xd < 0) xa = -1;
-					if (xd > 0) xa = +1;
-					if (yd < 0) ya = -1;
-					if (yd > 0) ya = +1;
+					if (xd < 0) {xa = -1; walkDist++;}
+					if (xd > 0) {xa = +1; walkDist++;}
+					if (yd < 0) {ya = -1; walkDist++;}
+					if (yd > 0) {ya = +1; walkDist++;}
+					//System.out.println(x);
+					//walkDist++;
 				}else{
 					aiPackage = -1;
 				}
@@ -84,7 +120,7 @@ public class AIEntity extends Entity{
 				lookForTarget(map);
 
 		}else{
-			lookForTarget(map);
+			aiPackage = -1;
 		}
 	}
 	

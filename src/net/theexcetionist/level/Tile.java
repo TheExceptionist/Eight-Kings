@@ -14,6 +14,10 @@ public class Tile {
 	public static Tile grass = new GrassTile(0);
 	public static Tile tree = new TreeTile(1);
 	public static Tile path = new PathTile(2);
+	public static Tile brick = new BrickTile(3);
+	public static Tile brickPath = new BrickPath(4);
+	public static Tile entryPoint = new EntryTile(5);
+	public static Tile backgroundTile = new BackgroundTile(6);
 	
 	protected int x, y;
 //	public static Tile rock = new RockTile(1);
@@ -47,6 +51,8 @@ public class Tile {
 	public boolean connectsToWater = false;
 	
 	protected boolean mayPass = true;
+	protected boolean isEntry = false;
+	protected boolean heals = false;
 
 	public Tile(int id) {
 		this.id = (byte) id;
@@ -99,5 +105,10 @@ public class Tile {
 
 	public void render(GameMap map, Graphics g, int x, int y) {
 		
+	}
+
+	public boolean canHeal() {
+		// TODO Auto-generated method stub
+		return heals;
 	}
 }

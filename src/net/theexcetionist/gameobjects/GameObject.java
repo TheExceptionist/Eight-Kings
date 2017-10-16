@@ -2,16 +2,19 @@ package net.theexcetionist.gameobjects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Random;
 
 import net.theexcetionist.level.GameMap;
 
 public class GameObject {
 	protected int x, y, w, h;
-	protected int health, maxHealth, defense, magDefense, attack, magAttack;
+	protected int health, maxHealth, defense, magDefense, attack, magAttack, maxDefense, maxMagDefense, maxAttack, maxMagAttack;
 	protected int ID;
 	protected String name;
 	
 	protected boolean alive;
+	
+	//protected Random random = new Random();
 
 	public GameObject(String name, int ID, int x, int y, int w, int h){
 		this.name = name;
@@ -26,22 +29,30 @@ public class GameObject {
 		alive = true;
 	}
 	
-	public void setStats(int health, int defense, int magDefense, int attack, int magAttack){
+	public void setStats(int health, int attack, int defense, int magAttack, int magDefense){
 		this.health = health;
 		this.maxHealth = health;
 		this.attack = attack;
 		this.defense = defense;
 		this.magAttack = magAttack;
 		this.magDefense = magDefense;
+		this.maxAttack = attack;
+		this.maxDefense = defense;
+		this.maxMagAttack = magAttack;
+		this.maxMagDefense = magDefense;
 	}
 	
-	public void addStats(int health, int defense, int magDefense, int attack, int magAttack){
+	public void addStats(int health, int attack, int defense, int magAttack, int magDefense){
 		this.health += health;
 		this.maxHealth = this.health;
 		this.attack += attack;
 		this.defense += defense;
 		this.magAttack += magAttack;
 		this.magDefense += magDefense;
+		this.maxAttack = this.attack;
+		this.maxDefense = this.defense;
+		this.maxMagAttack = this.magAttack;
+		this.maxMagDefense = this.magDefense;
 	}
 	
 	public int getDefense() {
@@ -165,4 +176,9 @@ public class GameObject {
 	public void setMaxHealth(int maxHealth) {
 		this.maxHealth = maxHealth;
 	}
+	
+	//@Override
+	/*public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }*/
 }

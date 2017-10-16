@@ -43,6 +43,18 @@ public class MapLoader {
 				if(red == 255 && green == 255 && blue == 255){
 					map[xx + yy * w] = 2;
 				}
+				if(red == 255 && green == 0 && blue == 0){
+					map[xx + yy * w] = 3;
+				}
+				if(red == 255 && green == 0 && blue == 255){
+					map[xx + yy * w] = 4;
+				}
+				if(red == 0 && green == 0 && blue == 255){
+					map[xx + yy * w] = 5;
+				}
+				if(red == 255 && green == 255 && blue == 0){
+					map[xx + yy * w] = 6;
+				}
 				/*if(red == 255 && green == 255 && blue == 255){
 					map[xx][yy] = 1;
 				}else if(red == 0 && green == 80 && blue == 255){

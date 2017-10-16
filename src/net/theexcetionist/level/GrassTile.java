@@ -6,15 +6,38 @@ import net.theexcetionist.assets.Assets;
 
 
 public class GrassTile extends Tile {
+	private int type = 0;
+	
 	public GrassTile(int id) {
 		super(id);
 		connectsToGrass = true;
+		heals = true;
 	}
 	
 	public void render(GameMap map, Graphics g, int x, int y){
 		super.render(map, g, x, y);
 		
-		g.drawImage(Assets.grassTile, x * tileSize, y * tileSize, tileSize, tileSize, null);
+		boolean u = !map.getTile(x, y - 1).connectsToGrass;
+		boolean d = !map.getTile(x, y + 1).connectsToGrass;
+		boolean l = !map.getTile(x - 1, y).connectsToGrass;
+		boolean r = !map.getTile(x + 1, y).connectsToGrass;
+		
+		if(r || d || u || l){
+			if(r && d) type = 8;
+			else if(r && u) type = 2;
+			else if(r) type = 5;
+			
+			if(l && d) type = 7;
+			else if(l && u) type = 4;
+			else if(l) type = 1;
+			
+			if(d) type = 6;
+			if(u) type = 3;
+		}else{
+			type  = 0;
+		}
+	
+		g.drawImage(Assets.grassTile[type], x * tileSize, y * tileSize, tileSize, tileSize, null);
 	}
 	
 	public void tick(){

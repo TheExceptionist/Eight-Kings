@@ -10,12 +10,23 @@ public class Assets {
 //	public static BufferedImage door;
 //	public static BufferedImage logo, ink;
 	public static BufferedImage testTile;
-	public static BufferedImage testObject;
-	public static BufferedImage rat;
-	public static BufferedImage grassTile;
+	public static BufferedImage[] player = new BufferedImage[5];
+	public static BufferedImage[] knight = new BufferedImage[5];
+	public static BufferedImage[] playerBack = new BufferedImage[4];
+	public static BufferedImage[] rat = new BufferedImage[5];
+	public static BufferedImage[] grassTile = new BufferedImage[9];
+	public static BufferedImage[] brickTile = new BufferedImage[9];
 	public static BufferedImage treeTile;
 	public static BufferedImage pathTile;
+	public static BufferedImage brickPathTile;
 	public static BufferedImage guiBack;
+	public static BufferedImage sword;
+	public static BufferedImage entryPoint;
+	public static BufferedImage background;
+	
+	public static BufferedImage menuBackground;
+	public static BufferedImage iconRat;
+	public static BufferedImage iconHuman;
 	
 	public static void load(){
 		SpriteLoader load = new SpriteLoader();
@@ -24,16 +35,83 @@ public class Assets {
 		Sprite test2 = new Sprite(load.load("/Characters/Player0.png"));
 		Sprite rodents = new Sprite(load.load("/Characters/Rodent0.png"));
 		Sprite tree = new Sprite(load.load("/Objects/Tree0.png"));
-		Sprite gui = new Sprite(load.load("/GUI/GUI1.png"));
+		Sprite gui = new Sprite(load.load("/GUI/GUI3.png"));
+		Sprite items = new Sprite(load.load("/Items/ShortWep.png"));
+		Sprite doors = new Sprite(load.load("/Objects/Door0.png"));
+		Sprite dungeon = new Sprite(load.load("/Examples/Dungeon.png"));
+		Sprite icon1 = new Sprite(load.load("/Objects/icon.png"));
+		Sprite icon2 = new Sprite(load.load("/Objects/icon2.png"));
+		
+		menuBackground = dungeon.crop(0, 0, 480, 640, 640, 480);
+		
+		iconRat = icon1.crop(0, 0, 32, 32, 32, 32);
+		iconHuman = icon2.crop(0, 0, 32, 32, 32, 32);
+		
+		background = test1.crop(1, 1, 16, 16, 16, 16);
+		
+		entryPoint = doors.crop(0, 0, 16, 16, 16, 16);
+		
+		sword = items.crop(0, 0, 16, 16, 16, 16);
 		
 		testTile = test1.crop(0, 1, 48, 112, 16, 16);
-		testObject = test2.crop(0, 0, 16, 16, 16, 16);
-		grassTile = test1.crop(1, 1, 64, 128, 16, 16);
+		
+		player[0] = test2.crop(0, 0, 16, 16, 16, 16);
+		player[1] = test2.crop(1, 0, 16, 16, 16, 16);
+		player[2] = test2.crop(0, 1, 16, 16, 16, 16);
+		player[3] = test2.crop(1, 1, 16, 16, 16, 16);
+		player[4] = test2.crop(4, 0, 16, 16, 16, 16);
+		
+		knight[0] = test2.crop(0, 2, 16, 16, 16, 16);
+		knight[1] = test2.crop(1, 2, 16, 16, 16, 16);
+		knight[2] = test2.crop(0, 3, 16, 16, 16, 16);
+		knight[3] = test2.crop(1, 3, 16, 16, 16, 16);
+		knight[4] = test2.crop(2, 2, 16, 16, 16, 16);
+		
+		playerBack[0] = test2.crop(2, 0, 16, 16, 16, 16);
+		playerBack[1] = test2.crop(3, 0, 16, 16, 16, 16);
+		playerBack[2] = test2.crop(2, 1, 16, 16, 16, 16);
+		playerBack[3] = test2.crop(3, 1, 16, 16, 16, 16);
+		
+		brickTile[0] = test1.crop(0, 3, 16, 16, 16, 16);
+		brickTile[1] = test1.crop(1, 3, 16, 16, 16, 16);
+		brickTile[2] = test1.crop(2, 3, 16, 16, 16, 16);
+		
+		brickTile[3] = test1.crop(0, 4, 16, 16, 16, 16);
+		brickTile[4] = test1.crop(1, 4, 16, 16, 16, 16);
+		brickTile[5] = test1.crop(2, 4, 16, 16, 16, 16);
+		
+		brickTile[6] = test1.crop(0, 5, 16, 16, 16, 16);
+		brickTile[7] = test1.crop(1, 5, 16, 16, 16, 16);
+		brickTile[8] = test1.crop(2, 5, 16, 16, 16, 16);
+
+		
+		grassTile[0] = test1.crop(8, 4, 16, 16, 16, 16);
+		grassTile[1] = test1.crop(7, 4, 16, 16, 16, 16);
+		grassTile[2] = test1.crop(9, 4, 16, 16, 16, 16);
+		
+		grassTile[3] = test1.crop(8, 3, 16, 16, 16, 16);
+		grassTile[4] = test1.crop(7, 3, 16, 16, 16, 16);
+		grassTile[5] = test1.crop(9, 3, 16, 16, 16, 16);
+		
+		grassTile[6] = test1.crop(8, 5, 16, 16, 16, 16);
+		grassTile[7] = test1.crop(7, 5, 16, 16, 16, 16);
+		grassTile[8] = test1.crop(9, 5, 16, 16, 16, 16);
+		//grassTile[9] = test1.crop(1, 1, 16, 16, 16, 16);*/
+		
 		treeTile = tree.crop(1, 1, 48, 48, 16, 16);
 		pathTile = test1.crop(1, 1, 64, 240, 16, 16);
+		brickPathTile = test1.crop(1, 1, 48, 80, 16, 16);
 		//grassTile = test1.crop(1, 1, 48, 112, 16, 16);
-		rat = rodents.crop(0, 1, 16, 16, 16, 16);
-		guiBack = gui.crop(0, 1, 112, 0, 16, 16);
+		rat[0] = rodents.crop(0, 1, 16, 16, 16, 16);
+		rat[1] = rodents.crop(0, 2, 16, 16, 16, 16);
+		rat[2] = rodents.crop(1, 1, 16, 16, 16, 16);
+		rat[3] = rodents.crop(1, 2, 16, 16, 16, 16);
+		rat[4] = rodents.crop(2, 1, 16, 16, 16, 16);
+		
+		
+		
+		guiBack = gui.crop(0, 0, 16, 16, 400, 1000);
+		//guiBack = gui.crop(0, 0, 1000, 404, 404, 1000);
 //		Sprite c1 = new Sprite(load.load("/Sprites/backgrounds/bg_blue.png"));
 //		Sprite c2 = new Sprite(load.load("/Sprites/backgrounds/bg_green.png"));
 //		Sprite c3 = new Sprite(load.load("/Sprites/backgrounds/bg_orange.png"));

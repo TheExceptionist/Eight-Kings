@@ -14,7 +14,7 @@ public class TreeTile extends Tile {
 	public void render(GameMap map, Graphics g, int x, int y){
 		super.render(map, g, x, y);
 		
-		g.drawImage(Assets.grassTile, x * tileSize, y * tileSize, tileSize, tileSize, null);
+		g.drawImage(Assets.grassTile[0], x * tileSize, y * tileSize, tileSize, tileSize, null);
 		g.drawImage(Assets.treeTile, x * tileSize, y * tileSize, tileSize, tileSize, null);
 	}
 	

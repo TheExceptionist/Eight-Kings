@@ -17,7 +17,7 @@ import net.theexcetionist.input.InputHandler;
 import net.theexcetionist.level.GameLevel;
 
 public class GameMain extends Canvas implements Runnable{
-	public static final String TITLE = "Java Game";
+	public static final String TITLE = "Eight Relics";
 	public static final int WIDTH = 1600;
 	public static final int HEIGHT = 1000;
 	public static final int SCALE = 1;
@@ -43,6 +43,9 @@ public class GameMain extends Canvas implements Runnable{
 	private Player player;
 	
 	private Font customFont;
+	private Font titleFont;
+	
+	private int currentStage = 1;
 
 	public void setCurrentLevel(GameLevel level){
 		currentLevel = level;
@@ -65,6 +68,7 @@ public class GameMain extends Canvas implements Runnable{
 		oreleon.setPlayer(player);
 		
 		customFont = new Font(null, Font.PLAIN, 30);
+		titleFont = new Font(null, Font.PLAIN, 50);
 		
 		/*try {
 		     GraphicsEnvironment ge = 
@@ -81,11 +85,11 @@ public class GameMain extends Canvas implements Runnable{
 		
 		Assets.load();
 		Jukebox.init();
-		Jukebox.load("/Music/med_ava.wav", "forest_theme");
-		Jukebox.load("/Music/mad_magic.wav", "dungeon_theme");
-		//Jukebox.load("/Music/medi_start.wav", "main_theme");
+		Jukebox.load("/Music/sinfonia.wav", "forest_theme");
+		Jukebox.load("/Music/canon.wav", "dungeon_theme");
+		Jukebox.load("/Music/aragon.wav", "main_theme");
 		
-
+		
 		//Jukebox.loop("forest_theme");
 		//Jukebox.load("/Music/med_ava.wav", "theme");
 	}
@@ -115,6 +119,8 @@ public class GameMain extends Canvas implements Runnable{
 		long lastTimer1 = System.currentTimeMillis();
 
 		init();
+		
+		Jukebox.play("main_theme");
 
 		while (running) {
 			long now = System.nanoTime();
@@ -148,14 +154,37 @@ public class GameMain extends Canvas implements Runnable{
 		}
 	}
 	
+	int tickCount = 0;
+	
 	private void tick(){
-		hud.tick();
-		currentLevel.tick();
+		if(currentStage == 0) {
+			tickCount++;
+			if(tickCount >= 60 * 5) currentStage = 1;
+		}
+		if(currentStage == 1){
+			menuTick();
+		}
+		if(currentStage == 2){
+			hud.tick();
+			currentLevel.tick();
+		}
 	}
 	
 	/*int x = 0;
 	int velX = 0;*/
 	
+	private void menuTick() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public final String[] options = {
+			"Start",
+			"Exit"
+	};
+	
+	private int currentOption = 0;
+
 	private void render(){
 		BufferStrategy bs = getBufferStrategy();
 		if(bs == null){
@@ -176,12 +205,60 @@ public class GameMain extends Canvas implements Runnable{
 		
 		//if(input.right.down) velX = 1;
 		//else velX = 0;
-		currentLevel.render(g);
+		if(currentStage == 0){
+			
+		}
+		if(currentStage == 1){
+			g.setFont(titleFont);
+			
+			g.drawImage(Assets.menuBackground, 0, 0, WIDTH, HEIGHT, null);
+			
+			g.drawString(GameMain.TITLE, WIDTH/3 + 100, HEIGHT/10);
+			
+			for(int i = 0; i < options.length; i++){
+				g.drawString(options[i], WIDTH/3 + 170, HEIGHT/5 + 60 * i);
+			}
+			/*if(currentOption > 1) {
+				currentOption= 0;
+				g.drawImage(Assets.iconRat, 100, 115, null);
+				g.drawImage(Assets.iconHuman, 150, 115, null);
+			}
+			if(currentOption < 0) {
+				currentOption= 1;
+			}*/
+			
+			if(currentOption == 0){
+				g.drawImage(Assets.iconRat, WIDTH/3 + 140, HEIGHT/5 - 30,  null);
+				g.drawImage(Assets.iconHuman,  WIDTH/3 + 280, HEIGHT/5 - 30,  null);
+			}
+			
+			if(currentOption == 1){
+				g.drawImage(Assets.iconRat, WIDTH/3 + 140, HEIGHT/5 + 30,  null);
+				g.drawImage(Assets.iconHuman,  WIDTH/3 + 280, HEIGHT/5 + 30,  null);
+			}
+			
+			
+			if(input.down.down){
+				currentOption = 1;
+			}
+			if(input.up.down){
+				currentOption = 0;
+			}
+			if(input.menu.down){
+				if(currentOption == 0) currentStage = 2;
+				if(currentOption == 1) System.exit(0);
+			}
+		}
 		
-		//g.setColor(Color.GREEN);
-		//g.drawString("Test", guiX, guiY);
-		
-		hud.render(g);
+		if(currentStage == 2){
+			g.setFont(customFont);
+			currentLevel.render(g);
+			
+			//g.setColor(Color.GREEN);
+			//g.drawString("Test", guiX, guiY);
+			
+			hud.render(g);
+		}
 		
 		g = bs.getDrawGraphics();
 		
